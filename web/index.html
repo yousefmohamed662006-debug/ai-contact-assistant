@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl" id="htmlRoot">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AI Contact Assistant | دليل الموظفين الذكي</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+  <div class="app-container">
+    <!-- Sidebar / Directory Drawer -->
+    <aside class="sidebar" id="sidebar">
+      <div class="sidebar-header">
+        <div class="brand">
+          <div class="brand-icon">✨</div>
+          <div class="brand-text">
+            <h2 id="sidebarTitle">Smart Directory</h2>
+            <span id="sidebarSubtitle">دليل الشركة الذكي</span>
+          </div>
+        </div>
+        <button class="close-sidebar-btn" id="closeSidebarBtn">✕</button>
+      </div>
+
+      <div class="sidebar-search">
+        <input type="text" id="directorySearchInput" placeholder="بحث سريع في كل الموظفين...">
+      </div>
+
+      <div class="directory-list" id="directoryList">
+        <!-- Contact list items will be injected here -->
+      </div>
+      
+      <div class="sidebar-footer">
+        <div class="status-indicator">
+          <span class="pulse-dot"></span>
+          <span id="engineStatusText">المحرك: محلي (Offline)</span>
+        </div>
+      </div>
+    </aside>
+
+    <!-- Main Chat Workspace -->
+    <main class="chat-workspace">
+      <!-- Top Navigation Bar -->
+      <header class="topbar">
+        <div class="topbar-left">
+          <button class="menu-btn" id="openSidebarBtn" title="عرض الدليل الكامل">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 6h16M4 12h16M4 18h16"/></svg>
+            <span id="sidebarToggleText">دليل الموظفين</span>
+          </button>
+          <div class="header-title">
+            <h1 id="headerMainTitle">المساعد الذكي لكبار المسؤولين</h1>
+            <p id="headerSubTitle">Smart Directory AI Assistant</p>
+          </div>
+        </div>
+
+        <div class="topbar-right">
+          <!-- Online / Offline Mode Toggle Button -->
+          <button class="mode-toggle-btn" id="modeToggleBtn" title="التبديل بين الأوفلاين والأونلاين">
+            <span class="mode-icon">⚡</span>
+            <span id="modeToggleText">أوفلاين (محلي)</span>
+          </button>
+
+          <!-- Language Switcher Button -->
+          <button class="lang-toggle-btn" id="langToggleBtn" title="تغيير اللغة">
+            🌐 English
+          </button>
+
+          <button class="icon-btn" id="settingsBtn" title="إعدادات الـ AI">
+            ⚙️
+          </button>
+        </div>
+      </header>
+
+      <!-- Chat Messages Scroll Area -->
+      <section class="messages-container" id="messagesContainer">
+        <!-- Welcome Message -->
+        <div class="message-group assistant">
+          <div class="assistant-avatar">🤖</div>
+          <div class="message-content">
+            <div class="bubble" id="welcomeBubble">
+              <p>أهلاً بك يا فندم! 👋 أنا المساعد الذكي لدليل موظفي الشركة.</p>
+              <p>تقدر تسألني بالصوت 🎙️ أو بالكتابة ✍️ عن أي موظف بالاسم، بالقسم، بالوظيفة، أو بالدور والمبنى وسأوافيك بكافة تفاصيله فوراً.</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Bottom Chat Input Bar -->
+      <footer class="input-container">
+        <!-- Voice Recording Active Overlay -->
+        <div class="voice-recording-bar" id="voiceRecordingBar" style="display: none;">
+          <div class="wave-animation">
+            <span></span><span></span><span></span><span></span><span></span>
+          </div>
+          <span class="voice-status-text" id="voiceStatusText">جاري الاستماع لصوتك... تكلم الآن</span>
+          <button class="stop-voice-btn" id="stopVoiceBtn">إلغاء</button>
+        </div>
+
+        <form class="chat-form" id="chatForm">
+          <button type="button" class="voice-btn" id="voiceBtn" title="تحدث بالصوت">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M12 2a3 3 0 0 0-3 3v7a3 3 0 0 0 6 0V5a3 3 0 0 0-3-3Z"/>
+              <path d="M19 10v2a7 7 0 0 1-14 0v-2"/>
+              <line x1="12" y1="19" x2="12" y2="22"/>
+            </svg>
+          </button>
+          
+          <input 
+            type="text" 
+            id="chatInput" 
+            placeholder="اسألني أو أقدر أساعدك إزاي..." 
+            autocomplete="off"
+          />
+
+          <button type="submit" class="send-btn" id="sendBtn" title="إرسال">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <line x1="22" y1="2" x2="11" y2="13"/>
+              <polygon points="22 2 15 22 11 13 2 9 22 2"/>
+            </svg>
+          </button>
+        </form>
+      </footer>
+    </main>
+  </div>
+
+  <!-- Detail Modal for Contact -->
+  <div class="modal-overlay" id="contactModal" style="display: none;">
+    <div class="modal-card" id="modalCardContent">
+      <!-- Injected modal content -->
+    </div>
+  </div>
+
+  <!-- Settings Modal for optional API key -->
+  <div class="modal-overlay" id="settingsModal" style="display: none;">
+    <div class="modal-card settings-card">
+      <div class="modal-header">
+        <h3 id="settingsModalTitle">⚙️ إعدادات الذكاء الاصطناعي (AI Settings)</h3>
+        <button class="close-btn" id="closeSettingsBtn">✕</button>
+      </div>
+      <div class="modal-body">
+        <div class="architecture-box">
+          <h4>💡 الفرق بين الوضعين:</h4>
+          <p>
+            • <strong>وضع الأوفلاين (Offline):</strong> يعمل محلياً بالكامل على السيرفر بدون إنترنت وبدون أي ليميت (مجاني 100% وفائق السرعة).
+          </p>
+          <p>
+            • <strong>وضع الأونلاين (Online Gemini):</strong> يستخدم موديل Google Gemini 1.5 Flash السحابي لصياغة جمل بشرية تفاعلية.
+          </p>
+        </div>
+        
+        <label for="apiKeyInput" style="font-weight: 600; margin-top: 8px;">Google Gemini API Key (مجاني من Google AI Studio):</label>
+        <input type="password" id="apiKeyInput" placeholder="AIzaSy...">
+        <p class="hint">
+          🔗 يمكنك إنشاء مفتاح مجاني في ثوانٍ من <a href="https://aistudio.google.com/" target="_blank" style="color: #60a5fa;">Google AI Studio</a>. عند إدخال المفتاح وتفعيل وضع الأونلاين سيعمل Gemini فوراً.
+        </p>
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-secondary" id="cancelSettingsBtn">إلغاء</button>
+        <button class="btn btn-primary" id="saveSettingsBtn">حفظ وتفعيل</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="/static/app.js"></script>
+</body>
+</html>

@@ -1,0 +1,20 @@
+pip install -r requirements.txt
+python run.py
+
+
+
+
+Stop-Process -Name python -Force -ErrorAction SilentlyContinue
+
+
+
+
+& "C:\Users\-Yousef-\AppData\Local\Programs\Python\Python313\python.exe
+" "c:/Users/-Yousef-/.gemini/antigravity/scratch/ai-contact-assistant/run.py"
+
+
+
+pip install -r requirements.txt
+
+
+python run.py
